@@ -44,7 +44,7 @@ int main() {
     while (true) {
         if (loggedInUserId == -1) {
             cout << "\n==================================\n";
-            cout << "       TERMINAL BANK INTERFACE     \n";
+            cout << "       GOLDEN REICHS BANK           \n";
             cout << "==================================\n";
             cout << "1. Sign Up\n2. Login\n3. Save & Close System\nChoice: ";
             int choice = getSafeInt();
@@ -78,8 +78,8 @@ int main() {
             cout << "\n----------------------------------\n";
             cout << "          ACCOUNT CONSOLE         \n";
             cout << "----------------------------------\n";
-            cout << "1. Create Account\n2. Add Balance\n3. Withdraw\n";
-            cout << "4. Create Card\n5. Block Card\n6. Transfer\n7. Payment\n8. Logout\nChoice: ";
+            cout << "1. Create Account\n2. Add Balance\n3. Check Balance\n"; 
+            cout << "4. Withdraw\n5. Create Card\n6. Block Card\n7. Transfer\n8. Payment\n9. Logout\nChoice: ";
             int choice = getSafeInt();
 
             if (choice == 1) {
@@ -94,24 +94,29 @@ int main() {
                 else cout << ">> Transaction rejected. Ownership mismatch.\n";
             }
             else if (choice == 3) {
+                cout << "Enter Account Reference Number: ";
+                int accId = getSafeInt();
+                showBalance(accounts, accountCount, accId, loggedInUserId);
+            }
+            else if (choice == 4) {
                 cout << "Account Reference Number: "; int accId = getSafeInt();
                 cout << "Withdrawal Value: $"; double amount = getSafeDouble();
                 if (withdraw(accounts, accountCount, accId, loggedInUserId, amount))
                     cout << ">> Settlement successful.\n";
             }
-            else if (choice == 4) {
+            else if (choice == 5) {
                 cout << "Target Account Number for Link: "; int accId = getSafeInt();
                 int cardId = createCard(cards, &cardCount, accounts, accountCount, accId, loggedInUserId);
                 if (cardId != -1) cout << ">> Secure Card generated. Card ID: " << cardId << "\n";
                 else cout << ">> Binding failed. Confirm profile metrics.\n";
             }
-            else if (choice == 5) {
+            else if (choice == 6) {
                 cout << "Target Card ID to Void: "; int cardId = getSafeInt();
                 if (blockCard(cards, cardCount, cardId, accounts, accountCount, loggedInUserId))
                     cout << ">> Security status updated: Card Blocked.\n";
                 else cout << ">> Action denied. Unauthorized validation.\n";
             }
-            else if (choice == 6) {
+            else if (choice == 7) {
                 cout << "Source Account Number: "; int fromAcc = getSafeInt();
                 cout << "Destination Account Number: "; int toAcc = getSafeInt();
                 cout << "Transfer Sum: $"; double amt = getSafeDouble();
@@ -119,14 +124,14 @@ int main() {
                     cout << ">> Vault transfer finalized.\n";
                 else cout << ">> Routing failed. Review parameters and balance records.\n";
             }
-            else if (choice == 7) {
+            else if (choice == 8) {
                 cout << "Billing Account Number: "; int accId = getSafeInt();
                 cout << "Invoice Amount: $"; double amt = getSafeDouble();
                 if (payment(accounts, accountCount, accId, loggedInUserId, amt))
                     cout << ">> Payment processing executed.\n";
                 else cout << ">> Direct settlement failed.\n";
             }
-            else if (choice == 8) {
+            else if (choice == 9) {
                 loggedInUserId = -1;
                 cout << ">> Secure terminal logout sequence executed.\n";
             }
